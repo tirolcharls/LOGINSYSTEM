@@ -1,0 +1,295 @@
+/* =====================================================
+   FOTO LOGIN SYSTEM - style.css
+   ALL design lives in this file (colours, fonts, spacing).
+   Used by: index.html, forgot-password.html, signup.html
+   ===================================================== */
+
+/* ---------- Font (Poppins) ---------- */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+/* =====================================================
+   - COLOURS -   (change these first!)
+   ===================================================== */
+:root {
+  /* Page background */
+  --bg-dark:           #0a1730;                  /* darkest blue */
+  --bg-mid:            #14305a;                  /* middle blue */
+  --bg-glow:           rgba(70, 120, 200, 0.55); /* soft glow top-right */
+
+  /* Card */
+  --card-bg:           rgba(222, 227, 236, 0.93);
+  --card-border:       rgba(255, 255, 255, 0.7);
+
+  /* Text */
+  --text-dark:         #111827;   /* FOTO title, input text */
+  --text-grey:         #6b7280;   /* small texts */
+  --text-light:        #9ca3af;   /* forgot password, eye icon */
+  --link-color:        #374a6d;   /* "Sign up" / "Log in" links */
+
+  /* Blue (active tab + buttons) */
+  --blue:              #2563eb;
+  --blue-hover:        #3b76f0;   /* button on hover (lighter) */
+  --blue-text:         #ffffff;
+
+  /* Tabs + inputs */
+  --tab-track:         #cbd1dc;   /* box behind both tabs */
+  --tab-inactive:      #d6dbe4;
+  --tab-inactive-text: #5b6472;
+  --input-bg:          rgba(255, 255, 255, 0.35);
+  --input-border:      #aab2c0;
+
+  /* Text under the card */
+  --footer-text:       rgba(255, 255, 255, 0.55);
+}
+
+/* =====================================================
+   - BASIC RESET + PAGE BACKGROUND -
+   ===================================================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  font-family: "Poppins", Arial, sans-serif;
+  overflow-x: hidden;
+  /* dark blue gradient + soft glow top-right */
+  background:
+    radial-gradient(circle at 88% 8%, var(--bg-glow), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(40, 90, 160, 0.45), transparent 50%),
+    linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+  background-attachment: fixed;
+}
+
+/* =====================================================
+   - SCHOOL LOGO (faded, behind the card) -
+   Uses logo.png from this folder, so it shows on EVERY page
+   (login, student, forgot password, sign up).
+   To change it: replace logo.png with another transparent PNG.
+   ===================================================== */
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 525px;               /* logo size - make bigger or smaller here */
+  height: 525px;
+  max-width: 95vw;
+  max-height: 95vw;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;               /* how faded the logo is (0 = hidden, 1 = solid) */
+  pointer-events: none;
+  background-image: url("logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* =====================================================
+   - CARD (the white box in the centre) -
+   ===================================================== */
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px 32px 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+/* ---------- Title + small text ---------- */
+.brand-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  color: var(--text-dark);
+}
+.brand-subtitle {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-grey);
+  margin-top: 4px;
+}
+
+/* Heading on forgot-password / signup pages */
+.page-heading {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+.page-note {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-grey);
+}
+
+/* =====================================================
+   - TABS (Photo Journalist | Student) -
+   ===================================================== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 22px;
+  padding: 4px;
+  background: var(--tab-track);
+  border-radius: 12px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 9px;
+  background: var(--tab-inactive);
+  color: var(--tab-inactive-text);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.tab-btn.active {                 /* the selected tab */
+  background: var(--blue);
+  color: var(--blue-text);
+}
+
+/* =====================================================
+   - FORM PANELS (only the active one is visible) -
+   ===================================================== */
+.form-panel { display: none; margin-top: 18px; }
+.form-panel.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Empty space where the Student password used to be */
+.student-space { height: 26px; }
+
+/* Form on forgot-password / signup pages */
+.page-form { margin-top: 18px; }
+
+/* =====================================================
+   - INPUT FIELDS -
+   ===================================================== */
+.input-box {
+  position: relative;
+  margin-bottom: 14px;
+}
+.input-box input {
+  width: 100%;
+  height: 46px;
+  padding: 0 44px 0 16px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.input-box input::placeholder { color: var(--text-grey); }
+.input-box input:focus { border-color: var(--blue); }
+
+/* Eye icon inside the password box */
+.eye-btn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+}
+.eye-btn svg { width: 18px; height: 18px; }
+
+/* =====================================================
+   - BUTTONS (Login, Enter Gallery, Send Reset Link, Create Account) -
+   ===================================================== */
+.btn-blue {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--blue);
+  color: var(--blue-text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+  transition: background 0.2s ease;
+}
+.btn-blue:hover { background: var(--blue-hover); }   /* hover = slightly lighter */
+
+/* =====================================================
+   - LINKS -
+   ===================================================== */
+/* "Forgot Password" (small, left-aligned) */
+.forgot-link {
+  display: inline-block;
+  margin: -4px 0 16px;
+  font-size: 12px;
+  color: var(--text-light);
+  text-decoration: none;
+}
+.forgot-link:hover { color: var(--text-grey); text-decoration: underline; }
+
+/* "Don't have an account? Sign up" and "Already have an account? Log in" */
+.signup-text {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-grey);
+}
+.signup-text a {
+  color: var(--link-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+.signup-text a:hover { text-decoration: underline; }  /* underline on hover */
+
+/* "<- Back to Login" */
+.back-link {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--link-color);
+  text-decoration: none;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* =====================================================
+   - FOOTER (small text under the card) -
+   ===================================================== */
+.page-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--footer-text);
+}
